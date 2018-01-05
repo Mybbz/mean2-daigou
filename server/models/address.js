@@ -6,7 +6,7 @@ const addressSchema = new mongoose.Schema({
   wechat: String,
   address: [{
     location: String,
-    tele: Number,
+    tele: String,
     recipient: String
   }]
 });

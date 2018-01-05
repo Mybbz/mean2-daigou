@@ -12,19 +12,42 @@
     </tr>
   </thead>
   <tbody *ngFor="let item of addressList">
-    <tr>
-      <th scope="row">{{item.wechat}}</th>
-      <td>{{item.name}}</td>
+    <tr *ngIf="!item['updateFlag']">
+      <th scope="row">{{item['wechat']}}</th>
+      <td>{{item['name']}}</td>
       <td>
         <table>
-          <tr *ngFor="let info of item.address">
-            <td>{{info.location}}&nbsp;{{info.recipient}}&nbsp;{{info.tele}}</td>
+          <tr *ngFor="let addr of item['address']">
+            <td>{{addr.location}}&nbsp;{{addr.recipient}}&nbsp;{{addr.tele}}</td>
           </tr>
         </table>
       </td>
       <td class="text-right call-to-action">
-        <button class="btn btn-default btn-xs">Update</button>
-        <button class="btn btn-info btn-xs" (click)="deleteRecord(item._id)">Remove</button>
+        <button class="btn btn-default btn-xs" (click)="updateRecord(item['_id'])">Update</button>
+        <button class="btn btn-info btn-xs" (click)="deleteRecord(item['_id'])">Remove</button>
+      </td>
+    </tr>
+    <tr *ngIf="item['updateFlag']" [formGroup]="updatedAddress">
+      <th>
+        <input type="text" placeholder="Wechat" formControlName="wechat">
+      </th>
+      <td>
+        <input type="text" placeholder="Name" formControlName="name">
+      </td>
+      <td>
+        <table formArrayName="address">
+          <tr *ngFor="let addr of updatedAddress.get('address').controls, let i = index">
+            <td [formGroupName]="i">
+              <input type="text" placeholder="Location" formControlName="location">
+              <input type="text" placeholder="Recipient" formControlName="recipient">
+              <input type="text" placeholder="Tele" formControlName="tele">
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td class="text-right call-to-action">
+        <button class="btn btn-default btn-xs" (click)="saveUpdate(item['_id'])">Save</button>
+        <button class="btn btn-info btn-xs" (click)="cancelUpdate(item['_id'])">Cancel</button>
       </td>
     </tr>
   </tbody>

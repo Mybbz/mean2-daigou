@@ -25,11 +25,11 @@ export class AddressService {
     return this.http.get(`/api/address?id=${id}&wechat=${wechat}&name=${name}`)
       .map(res => {
         this.addressInstance = res.json();
-        return this.addressInstance;
+        return this.addressInstance || [];
       })
       .catch(err => {
         console.log('Get Address Failed due to ' + err);
-        return Observable.throw(err);
+        return Observable.of([]);
       })
       .publishReplay(1).refCount();
   }
