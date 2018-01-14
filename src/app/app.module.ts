@@ -5,9 +5,11 @@ import { HttpModule } from '@angular/http';
 
 
 import { AppComponent } from './app.component';
-import { routing } from './app-routing.module';
+import { AppRouterModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 import { AddressModule } from './address/address.module';
+import { CoreModule } from './core/core.module';
+import { ShareModule } from './share/share.module';
 
 
 @NgModule({
@@ -19,9 +21,11 @@ import { AddressModule } from './address/address.module';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    routing,
+    AppRouterModule,
     HomeModule,
-    AddressModule
+    AddressModule,
+    ShareModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
